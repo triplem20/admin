@@ -43,9 +43,7 @@ class MenuScreen extends StatelessWidget {
                   child: _buildServices(context),
                 ),
                 const SizedBox(width: 20),
-                Expanded(
-                  child: _buildProducts(context),
-                ),
+
               ],
             ),
           )
@@ -56,7 +54,7 @@ class MenuScreen extends StatelessWidget {
               const SizedBox(height: 20),
               _buildServices(context),
               const SizedBox(height: 20),
-              _buildProducts(context),
+
             ],
           ),
         ],
@@ -123,14 +121,14 @@ class MenuScreen extends StatelessWidget {
               if (state is ServiceLoading) {
                 return Center(
                   child: CircularProgressIndicator(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Theme.of(context).colorScheme.onSecondary,
                   ),
                 );
               }
               if (state is ServiceLoaded) {
                 return ReorderableListView(
                   shrinkWrap: true,
-                  children: [
+                  children: [ 
                     for (int index = 4; index < state.services.length; index++,)
                       ServiceListTile(
                         service: state.services[index],
@@ -157,63 +155,7 @@ class MenuScreen extends StatelessWidget {
       ),
     );
   }
-  Container _buildProducts(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20.0),
-      decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.onSecondary,
-          borderRadius: BorderRadius.circular(15.0)
-      ),
 
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Products',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-          const SizedBox(height: 20),
-          AddProductCard(),
-          const SizedBox(height: 5),
-          BlocBuilder<ProductBloc, ProductState>(
-            builder: (context, state) {
-              if (state is ProductLoading) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                );
-              }
-              if (state is ProductLoaded) {
-                return ReorderableListView(
-                  shrinkWrap: true,
-                  children: [
-                    for (int index = 0; index < state.products.length; index++,)
-                      ProductListTile(
-                        product: state.products[index],
-                        key: ValueKey(
-                          state.products[index].id,
-                        ), onTap: () {  },
-                      ),
-                  ],
-                  onReorder: (oldIndex, newIndex) {
-                    context.read<ProductBloc>().add(
-                      SortProducts(
-                        oldIndex: oldIndex,
-                        newIndex: newIndex,
-                      ),
-                    );
-                  },
-                );
-              } else {
-                return const Text('Something went wrong.');
-              }
-            },
-          ),
-        ],
-      ),
-    );
-  }
 
   Container _buildCategories(BuildContext context) {
     return Container(
@@ -236,7 +178,7 @@ class MenuScreen extends StatelessWidget {
               if (state is CategoryLoading) {
                 return Center(
                   child: CircularProgressIndicator(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Theme.of(context).colorScheme.onSecondary,
                   ),
                 );
               }

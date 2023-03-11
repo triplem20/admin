@@ -21,6 +21,7 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
         super(ServiceLoading()) {
     on<LoadServices>(_onLoadServices);
     on<AddService>(_onAddService);
+    on<RemoveService>(_onRemoveService);
     on<FilterServices>(_onFilterServices);
     on<SortServices>(_onSortServices);
 
@@ -55,6 +56,19 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
       emit(ServiceLoaded(services: newServices));
     }
   }
+  void _onRemoveService(
+      RemoveService event,
+      Emitter<ServiceState> emit,
+      ) {
+    final state = this.state;
+    if (state is ServiceLoaded) {
+      List<Service> newServices = List.from((state as ServiceLoaded).services)
+        ..remove(event.service);
+
+      emit(ServiceLoaded(services: newServices));
+      }
+    }
+
 
   void _onFilterServices(
       FilterServices event,

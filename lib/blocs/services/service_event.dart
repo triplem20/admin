@@ -28,6 +28,15 @@ class AddService extends ServiceEvent {
   List<Object> get props => [service];
 }
 
+class RemoveService extends ServiceEvent {
+  final Service service;
+
+  const RemoveService({required this.service});
+
+  @override
+  List<Object> get props => [service];
+}
+
 class UpdateServices extends ServiceEvent {
   final Service service;
 

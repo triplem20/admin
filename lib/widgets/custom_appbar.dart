@@ -5,25 +5,23 @@ import 'package:admin/blocs/settings/settings_bloc.dart';
 import 'package:get/get.dart';
 import 'package:admin/screens/login_screen.dart';
 
-class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
+class CustomAppBar extends StatelessWidget  with PreferredSizeWidget  {
   const CustomAppBar({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-           return BlocBuilder<SettingsBloc, SettingsState>(
-            builder: (context, state) {
-              if (state is SettingsLoading) {
-                return AppBar(
-                  backgroundColor: Colors.greenAccent,
-                  title: Text(
-                    'Your Company Name',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall!
-                        .copyWith(color: Colors.white),
-                  ),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.greenAccent,
+        title: Text('Top Care for Cleaning',
+          style: Theme.of(context)
+              .textTheme
+              .headlineSmall!
+              .copyWith(color: Colors.white),
+        ),
+
                   actions: <Widget>[
                     IconButton(
                       icon: Icon(
@@ -43,45 +41,10 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
                     const SizedBox(width: 15),
                   ],
                   centerTitle: true,
+                ),
                 );
-              }
-              if (state is SettingsLoaded) {
-                return AppBar(
-                  backgroundColor: Colors.greenAccent,
-                  title: Text(
-                    (state.restaurant.name == null)
-                        ? 'Set a Name for Your Company'
-                        : state.restaurant.name!,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall!
-                        .copyWith(color: Colors.white),
-                  ),
-                  actions: <Widget>[
-                    IconButton(
-                      icon: Icon(
-                        Icons.logout,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return _showDialog(context);
-                          },
-                        );
 
-                      },
-                    ),
-                    const SizedBox(width: 15),
-                  ],
-                  centerTitle: false,
-                );
-              } else {
-                return const Text('Something went wrong.');
-              }
-            },
-          );
+
 
   }
   Dialog _showDialog(BuildContext context) {
@@ -120,13 +83,16 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
     ),
                    const SizedBox(width: 20),
                    ElevatedButton(
-                     child: Text("Cancel"),
+                     child: Text("Cancel",
+                       style: TextStyle(
+                         color: Colors.black,
+                       ),),
                      onPressed: () {
                        Navigator.pop(context);
                      },
                      style: ButtonStyle(
                        padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 10, vertical: 20)),
-                       backgroundColor: MaterialStateProperty.all<Color>(Colors.greenAccent),
+                       backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.onSecondary,),
                      ),
                    ),
                  ],
